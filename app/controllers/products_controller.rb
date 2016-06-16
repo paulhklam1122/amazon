@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :find_product, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:show, :index]
   def index
     @products = Product.order("id")
@@ -21,16 +22,16 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find params[:id]
+    # @product = Product.find params[:id]
     @review = Review.new
   end
 
   def edit
-    @product = Product.find params[:id]
+    # @product = Product.find params[:id]
   end
 
   def update
-    @product = Product.find params[:id]
+    # @product = Product.find params[:id]
     product_params = params.require(:product).permit(:title, :description, :price)
     if @product.update product_params
       redirect_to product_path(@product), notice: "Product updated!"
@@ -41,7 +42,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find params[:id]
+    # @product = Product.find params[:id]
     @product.destroy
     redirect_to products_path, notice: "Product deleted!"
   end
@@ -50,6 +51,10 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:title, :description, :price, :category_id)
+  end
+
+  def find_product
+    @product = Product.find params[:id]
   end
 
   def authenticate_user!
