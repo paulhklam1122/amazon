@@ -1,0 +1,45 @@
+<h1>Products</h1>
+<p>Created By: <%= @product.user.full_name if @product.user %></p>
+<h1><%= @product.title.titleize %></h1>
+<p><%= @product.description %></p>
+<p>Price: <%= @product.price %></p>
+
+<%= link_to "Edit", edit_product_path(@product) %>
+<%= link_to "Delete", product_path(@product),
+                      method: :delete,
+                      data:   {confirm: "Are you sure?"} %>
+
+<h2>Create a Review</h2>
+<%= @review.errors.full_messages.join(", ") %>
+<%= form_for [@product, @review] do |f| %>
+  <div>
+    <%= f.radio_button :star_count, '1' %>
+      <%= label :star_count_1, '1' %>
+      <%= f.radio_button :star_count, '2' %>
+      <%= label :star_count_2, '2' %>
+      <%= f.radio_button :star_count, '3' %>
+      <%= label :star_count_3, '3' %>
+      <%= f.radio_button :star_count, '4' %>
+      <%= label :star_count_4, '4' %>
+      <%= f.radio_button :star_count, '5' %>
+      <%= label :star_count_5, '5' %>
+    <%#= f.label :star_count %>
+    <%#= f.text_field :star_count %>
+  </div>
+  <div>
+    <%= f.label "Review Message" %>
+    <%= f.text_area :body %>
+  </div>
+  <%= f.submit %>
+<% end %>
+
+<h2>Reviews</h2>
+<% @product.new_first_reviews.each do |rev| %>
+<p>Created By: <%= rev.user.full_name if rev.user %></p>
+  <%= rev.star_count %>
+  <%= rev.body %>
+  <%= link_to "Delete", product_review_path(@product, rev),
+                            method: :delete,
+                            data: {confirm: "Are you sure?"}%>
+<hr>
+<% end %>
