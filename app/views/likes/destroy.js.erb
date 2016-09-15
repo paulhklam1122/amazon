@@ -1,0 +1,2 @@
+// alert ('unliked!');
+$('#<%= dom_id(@review) %>').html("<%= j(render('/reviews/review', {review: @review})) %>");

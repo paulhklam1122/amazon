@@ -1,0 +1,15 @@
+<div id="<%= dom_id(review) %>">
+  <p>Created By: <%= review.user.full_name if review.user %></p>
+    <%= review.star_count %>
+    <%= review.body %>
+    <% if review.liked_by?(current_user) %>
+      <%= link_to fa_icon("thumbs-up"), product_review_like_path(@product, review, review.liked_for(current_user)), method: :delete, remote: true, class: "like-icon" %>
+    <% else %>
+      <%= link_to fa_icon("thumbs-o-up"), product_review_likes_path(@product, review), method: :post, remote: true, class: "like-icon" %>
+    <% end %>
+    <%= link_to "Delete", product_review_path(@product, review),
+                              method: :delete,
+                              remote: true,
+                              data: {confirm: "Are you sure?"}%>
+<hr>
+</div>

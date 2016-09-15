@@ -1,0 +1,5 @@
+$('#reviews').prepend("<%= j(render('/reviews/review', {review: @review})) %>");
+$('#reviews div:first-child').hide().fadeIn(1000);
+
+<% @review = Review.new %>
+$('#review-form').html('<%= j render "form" %>')

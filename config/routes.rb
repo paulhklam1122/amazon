@@ -18,8 +18,12 @@ Rails.application.routes.draw do
     get :search, on: :collection
     post :flag, on: :member
     post :mark_done
-    resources :reviews, only: [:create, :destroy]
+    resources :reviews, only: [:create, :destroy] do
+      resources :likes, only:[:create, :destroy]
+    end
+    resources :favourites, only:[:create, :destroy]
   end
+  resources :favourites, only:[:index]
   namespace :admin do
     resources :products
   end
